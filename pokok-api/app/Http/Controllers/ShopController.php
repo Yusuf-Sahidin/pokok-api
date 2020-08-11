@@ -52,7 +52,7 @@ class ShopController extends Controller
         $message = "";
         $data = null;
         $code = 200;
-        
+
         if($user){
             $this -> validate($request, [
                 'name' => 'required',
@@ -102,7 +102,7 @@ class ShopController extends Controller
             $product = Product::find($id);
 
             if($product){
-                if($product -> stoct > 0){
+                if($product -> stock > 0){
                     $safe_carts[$idx]['id'] = $product -> id;
                     $safe_carts[$idx]['name'] = $product -> name;
                     $safe_carts[$idx]['price'] = $product -> price;
@@ -223,7 +223,7 @@ class ShopController extends Controller
                         }
                     } else {
                         $message = "CURL Error #:" . $respon_services['error'];
-                    }   
+                    }
                 }else {
                     $message = "weight invalid";
                 }
@@ -281,7 +281,7 @@ class ShopController extends Controller
                                 if ($product->stock>=$quantity) {
                                     $total_price += $product->price * $quantity;
                                     $total_weight += $product->weight * $quantity;
-                                    
+
                                     $product_order = new ProductOrder;
                                     $product_order->product_id = $product->id;
                                     $product_order->order_id = $order->id;
@@ -294,7 +294,7 @@ class ShopController extends Controller
                                 }
                                 else {
                                     $error++;
-                                    throw new \Exception("Out of Stock"); 
+                                    throw new \Exception("Out of Stock");
                                 }
                             }
                             else {
@@ -307,7 +307,7 @@ class ShopController extends Controller
                     if ($weight<=0) {
                         $error++;
                         throw new \Exception("Weight Null");
-                        
+
                     }
 
                     $data = [
@@ -374,7 +374,7 @@ class ShopController extends Controller
         $status = "error";
         $message = "";
         $data = [];
-        
+
         if($user){
             $orders = Order::select('*')
                 -> where('user_id', '=', $user -> id)
