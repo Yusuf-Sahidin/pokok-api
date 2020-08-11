@@ -97,4 +97,38 @@ class AuthController extends Controller
             'data' => null
         ], 200);
     }
+
+    public function editProfile(Request $request){
+
+        $user = Auth::user();
+        $status = "error";
+        $message = "";
+        $data = null;
+        $code = 200;
+        if ($user) {
+            $this->validate($request, [
+                'name' => 'required', 
+                'email' => 'required',
+                'phone' => 'required|numeric'
+            ]);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->address = $request->address;
+            $user->phone = $request->phone;
+            if ($user->save()) {
+                $status = "success";
+                $message = "Edit Profile Success";
+                $data = $user->toArray();
+            } else {
+                $message = "Edit Profile failed";
+            }
+        }else {
+            $message = "user not found";
+        }
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+            'data' => $data
+        ], $code);
+    }
 }

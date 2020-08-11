@@ -32,6 +32,7 @@ Route::prefix('uas') -> group(function(){
         Route::post('services', 'ShopController@services');
         Route::post('payment', 'ShopController@payment');
         Route::get('my-order', 'ShopController@myOrder');
+        Route::post('edit-profile', 'AuthController@editProfile');
     });
 
     //products
